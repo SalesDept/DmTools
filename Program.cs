@@ -10,8 +10,9 @@ namespace DmTools
         static void Main(string[] args)
         {
             var programRunning = true;
-            var playerList = new List<Player>();
-           
+            var playerList = new List<Player>(); 
+            
+            
            
             while (programRunning)
                 { 
@@ -19,6 +20,7 @@ namespace DmTools
                     int selection = Convert.ToInt32(Console.ReadLine());
                     if (selection == 1) 
                     {
+                        
                         Player.InputPlayer(playerList);
                         Console.WriteLine("Player has been input.");
                     }
@@ -29,6 +31,10 @@ namespace DmTools
                     else if (selection == 3) 
                     {
                     SearchPlayers(playerList);
+                    }
+                    else if(selection == 4)
+                    {
+                    RollInitiaive(playerList);
                     }
                     else { programRunning = false;}              
                 }
@@ -58,6 +64,21 @@ namespace DmTools
                     });
                 }
             }
+        static void RollInitiaive(List<Player> playerList)
+            {
+                
+                DiceBag diceBag = new DiceBag();
+                Console.WriteLine("Rolling Initiative");
+                foreach(Player p in playerList)
+                {
+                    p.InitiativeScore = diceBag.RollWithModifier(DiceBag.Dice.d20, p.DexMod); 
+                }
+                List<Player> SortedList = playerList.OrderByDescending(p => p.InitiativeScore).ToList();
+                foreach(Player p in SortedList)
+                {
+                    Console.WriteLine(p.CharacterName + "'s Initiative is: " + p.InitiativeScore);
+                }
+            }
          
          static void DisplayMenu()
             {
@@ -65,7 +86,8 @@ namespace DmTools
                 Console.WriteLine("1. Input Player");
                 Console.WriteLine("2. List Players");
                 Console.WriteLine("3. Find Player by Name");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Roll Initiative");
+                Console.WriteLine("Anything Else = Exit");
             }   
 
         }

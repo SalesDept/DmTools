@@ -2,23 +2,27 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using DmTools;
 
 namespace DmTools
-{
+{   
     class Player
     {
+        
         public string PlayerSheet => $"Player Id: {PlayerId}\n" +
                                           $"Player Name: {PlayerName}\n" +
                                           $"Character Name: {CharacterName}\n" +
                                           "Strength Dexterity Constitution Intelligence Wisdom Charisma\n" +
-                                          $"{Strength,5}{Dexterity,9}{Constitution,11}{Intelligence,14}{Wisdom,10}{Charisma,8}";
+                                          $"{Strength,5}{Dexterity,9}{Constitution,11}{Intelligence,14}{Wisdom,10}{Charisma,8}\n"+
+                                          $"{StrMod, 5}{DexMod, 9}{ConMod, 11}{IntMod, 14}{WisMod, 10}{ChaMod, 8}";
 
         public int PlayerId;
         public string PlayerName;
         public string CharacterName;
         
 
-
+        
+        
         //Attributes
         public int Strength;
         public int Dexterity;
@@ -26,6 +30,15 @@ namespace DmTools
         public int Intelligence;
         public int Wisdom;
         public int Charisma;
+
+        public int StrMod;
+        public int DexMod;
+        public int ConMod;
+        public int IntMod;
+        public int WisMod;
+        public int ChaMod;
+
+        public int InitiativeScore;
 
         public static void InputPlayer(List<Player> playerList)
             {
@@ -36,7 +49,7 @@ namespace DmTools
                 Console.WriteLine("Enter Your Character Name");
                 var characterName = Console.ReadLine();
                 Console.WriteLine("Enter your Strength Score");
-                var strength = Convert.ToInt32(Console.ReadLine());
+                int strength = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter your Dexterity Score");
                 var dexterity = Convert.ToInt32(Console.ReadLine());
                 Console.WriteLine("Enter your Constitution Score");
@@ -58,6 +71,13 @@ namespace DmTools
                 player.Intelligence = intelligence;
                 player.Wisdom = wisdom;
                 player.Charisma = charisma;
+
+                player.StrMod = (strength - 10) / 2;
+                player.DexMod = (dexterity - 10) / 2;
+                player.ConMod = (constitution - 10) / 2;
+                player.IntMod = (intelligence - 10) / 2;
+                player.WisMod = (wisdom - 10) / 2;
+                player.ChaMod = (charisma - 10) / 2;
 
                 Console.WriteLine(player.PlayerSheet);
 
